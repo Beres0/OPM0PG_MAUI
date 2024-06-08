@@ -16,7 +16,7 @@
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.opm0pg_maui</ApplicationId>
-		<ApplicationIdGuid>6b5fecbe-2652-4032-8111-7be70201fdd6</ApplicationIdGuid>
+		<ApplicationIdGuid>ff689bd7-2b1f-4bce-832b-c59111110d18</ApplicationIdGuid>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -49,7 +49,29 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\WSH_HomeAssignment.Api.Contracts\WSH_HomeAssignment.Api.Contracts.csproj" />
+	  <ProjectReference Include="..\WSH_HomeAssignment.Domain.Contracts\WSH_HomeAssignment.Domain.Contracts.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="CurrentExchangeRatesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="RegistrationPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="SavedExchangeRatesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="RouteFactories\" />
 	</ItemGroup>
 
 </Project>

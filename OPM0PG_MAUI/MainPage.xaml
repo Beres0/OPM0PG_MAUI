@@ -1,40 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="OPM0PG_MAUI.MainPage">
+             x:Class="OPM0PG_MAUI.MainPage"
+             xmlns:vm="clr-namespace:OPM0PG_MAUI.ViewModels"
+             x:DataType="vm:LoginViewModel"
+             Title="Login">
 
     <ScrollView>
         <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
             VerticalOptions="Center">
-
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-
+            <Label Text="Username"></Label>
+            <Entry Text="{Binding LoginDto.UserName}" Placeholder="Enter name"></Entry>
+            <Label Text="Password"></Label>
+            <Entry Text="{Binding LoginDto.Password}" IsPassword="True"></Entry>
+            <Button Command="{Binding LoginCommand}" IsEnabled="{Binding LoginDto.HasErrors, Converter={StaticResource BoolToNegatedConverter}}" Text="Submit"></Button>
         </VerticalStackLayout>
     </ScrollView>
 

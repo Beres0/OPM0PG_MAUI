@@ -1,24 +1,30 @@
-﻿namespace OPM0PG_MAUI;
+﻿using OPM0PG_MAUI.ViewModels;
 
-public partial class MainPage : ContentPage
+namespace OPM0PG_MAUI
 {
-	int count = 0;
+    public partial class MainPage : ContentPage
+    {
+        private readonly LoginViewModel viewModel;
 
-	public MainPage()
-	{
-		InitializeComponent();
-	}
+        public MainPage(LoginViewModel viewModel)
+        {
+            InitializeComponent();
+            this.BindingContext = viewModel;
+            this.viewModel = viewModel;
+        }
+        protected override void OnAppearing()
+        {
+            viewModel.LoginDto = new Proxy.ObservableLoginDto();
+            viewModel.OnError += ViewModel_OnError;
+        }
+        protected override void OnDisappearing()
+        {
+            viewModel.OnError -= ViewModel_OnError;
+        }
+        private void ViewModel_OnError(object sender, Exception e)
+        {
+            DisplayAlert("Error", e.Message,"Ok");
+        }
 
-	private void OnCounterClicked(object sender, EventArgs e)
-	{
-		count++;
-
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
-
-		SemanticScreenReader.Announce(CounterBtn.Text);
-	}
+    }
 }
-

@@ -4,11 +4,28 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:OPM0PG_MAUI"
-    Shell.FlyoutBehavior="Disabled">
+    xmlns:proxy="clr-namespace:OPM0PG_MAUI.Proxy"
+    x:DataType="local:AppShell"
+    Shell.FlyoutBehavior="Flyout">
 
     <ShellContent
-        Title="Home"
+        Title="Login"
         ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+        Route="LoginPage"
+        FlyoutItemIsVisible="True"></ShellContent>
+    <ShellContent
+        Title="Registration"
+        ContentTemplate="{DataTemplate local:RegistrationPage}"
+        Route="Registration" 
+        FlyoutItemIsVisible="True"></ShellContent>
+    <ShellContent
+        Title="Current"
+        ContentTemplate="{DataTemplate local:CurrentExchangeRatesPage}"
+        Route="Current"
+        FlyoutItemIsVisible="False"/>
+    <ShellContent
+        Title="Saved"
+        ContentTemplate="{DataTemplate local:SavedExchangeRatesPage}"
+        Route="Saved" 
+        FlyoutItemIsVisible="False"/>
 </Shell>

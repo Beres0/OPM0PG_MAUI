@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OPM0PG_MAUI.CurrentExchangeRatesPage"
+             Title="Current Exchangerates"
+             xmlns:vm="clr-namespace:OPM0PG_MAUI.ViewModels"
+             xmlns:models="clr-namespace:OPM0PG_MAUI.Models"
+             xmlns:dto="clr-namespace:WSH_HomeAssignment.Api.Contracts.ExchangeRates.Outputs;assembly=WSH_HomeAssignment.Api.Contracts"
+             x:DataType="vm:ExchangeRatesViewModel"
+             >
+    <ScrollView>
+        <VerticalStackLayout>
+            <Label FontSize="Large" Text="{Binding Date, StringFormat='Date: {0}'}"></Label>
+            <Frame Margin=" 10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0"  FontSize="Medium" Text="Conversion"></Label>
+                    <Picker Grid.Column="0" Grid.Row="1" ItemsSource="{Binding CurrencyKeys}" SelectedItem="{Binding SelectedFrom}"></Picker>
+                    <Picker Grid.Column="1" Grid.Row="1" ItemsSource="{Binding CurrencyKeys}" SelectedItem="{Binding SelectedTo}"></Picker>
+                    <Entry Grid.Column="0" Grid.Row="2" Text="{Binding ConversionInput}"></Entry>
+                    <Label VerticalTextAlignment="End" Grid.Column="1" Grid.Row="2" Text="{Binding ConversionOuput, StringFormat='{0:N2}'}"></Label>
+                </Grid>
+            </Frame>
+            <CollectionView ItemsSource="{Binding DailyExchangeRates}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:ObservableDailyExchangeRateDto">
+                        <Frame Margin="10">
+                            <VerticalStackLayout>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Grid.Column="0" FontSize="Medium" VerticalTextAlignment="Center" Text="{Binding Dto.Currency}"></Label>
+                                    <Label Grid.Row="0" Grid.Column="1" FontSize="Medium" VerticalTextAlignment="Center" Text="{Binding Dto.Value}"></Label>
+                                    <Label Grid.Row="0" Grid.Column="2" VerticalTextAlignment="Center" Text="{Binding Dto.Unit,StringFormat='Unit: {0}'}"></Label>
+                                    <CheckBox Grid.Row="0" Grid.Column="3" IsChecked="{Binding IsSaved, Mode=OneTime}" CheckedChanged="CheckBox_CheckedChanged"></CheckBox>
+                                    <Label Grid.Row="1" Grid.ColumnSpan="4" Text="{Binding Note}" FontAttributes="Italic"/>
+                                </Grid>
+                                <HorizontalStackLayout HorizontalOptions="Start" VerticalOptions="CenterAndExpand" Spacing="60">
+                                    <Label Text="{Binding Note}"></Label>
+                                </HorizontalStackLayout>
+                                
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                
+            </CollectionView>
+            
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
