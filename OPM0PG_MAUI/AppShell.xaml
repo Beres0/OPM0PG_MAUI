@@ -28,4 +28,9 @@
         ContentTemplate="{DataTemplate local:SavedExchangeRatesPage}"
         Route="Saved" 
         FlyoutItemIsVisible="False"/>
+    <ShellContent
+        Title="Logout"
+        ContentTemplate="{DataTemplate local:Logout}"
+        Route="Logout" 
+        FlyoutItemIsVisible="False"/>
 </Shell>

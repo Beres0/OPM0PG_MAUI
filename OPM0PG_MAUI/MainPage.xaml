@@ -14,7 +14,7 @@
             <Label Text="Username"></Label>
             <Entry Text="{Binding LoginDto.UserName}" Placeholder="Enter name"></Entry>
             <Label Text="Password"></Label>
-            <Entry Text="{Binding LoginDto.Password}" IsPassword="True"></Entry>
+            <Entry Text="{Binding LoginDto.Password}" IsPassword="True" Placeholder="Enter password"></Entry>
             <Button Command="{Binding LoginCommand}" IsEnabled="{Binding LoginDto.HasErrors, Converter={StaticResource BoolToNegatedConverter}}" Text="Submit"></Button>
         </VerticalStackLayout>
     </ScrollView>

@@ -27,9 +27,19 @@ namespace OPM0PG_MAUI.Proxy
         }
         private void SetToken(TokenDto tokenDto)
         {
-            client.SetToken(tokenDto.Value);
-            CurrentToken = tokenDto;
-            Shell.Current.AsAppShell().IsAuthenticated = true;
+            if(tokenDto is not null)
+            {
+                client.SetToken(tokenDto.Value);
+                CurrentToken = tokenDto;
+                Shell.Current.AsAppShell().IsAuthenticated = true;
+            }
+            else
+            {
+                client.SetToken(null);
+                CurrentToken = null;
+                Shell.Current.AsAppShell().IsAuthenticated = false;
+            }
+
         }
         public async Task LoginAsync(LoginDto input)
         {
@@ -48,6 +58,10 @@ namespace OPM0PG_MAUI.Proxy
         {
             var response = await client.PostAsync<TokenDto>(Address + "refresh-token");
             SetToken(response);
+        }
+        public void Logout()
+        {
+            SetToken(null);
         }
     }
 }

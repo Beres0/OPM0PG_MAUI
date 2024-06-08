@@ -10,8 +10,11 @@
              >
     <ScrollView>
         <VerticalStackLayout>
-            <Label FontSize="Large" Text="{Binding Date, StringFormat='Date: {0}'}"></Label>
-            <Frame Margin=" 10">
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+                           IsVisible="{Binding IsLoading}" />
+
+            <Label Margin="10" IsVisible="{Binding IsLoading,Converter={StaticResource BoolToNegatedConverter}}" FontSize="Large" Text="{Binding Date}"></Label>
+            <Frame IsVisible="{Binding IsLoading,Converter={StaticResource BoolToNegatedConverter}}" Margin=" 10">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
@@ -51,10 +54,6 @@
                                     <CheckBox Grid.Row="0" Grid.Column="3" IsChecked="{Binding IsSaved, Mode=OneTime}" CheckedChanged="CheckBox_CheckedChanged"></CheckBox>
                                     <Label Grid.Row="1" Grid.ColumnSpan="4" Text="{Binding Note}" FontAttributes="Italic"/>
                                 </Grid>
-                                <HorizontalStackLayout HorizontalOptions="Start" VerticalOptions="CenterAndExpand" Spacing="60">
-                                    <Label Text="{Binding Note}"></Label>
-                                </HorizontalStackLayout>
-                                
                             </VerticalStackLayout>
                         </Frame>
                     </DataTemplate>

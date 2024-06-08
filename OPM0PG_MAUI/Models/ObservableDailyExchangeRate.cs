@@ -9,14 +9,20 @@ namespace OPM0PG_MAUI.Models
 {
     public partial class ObservableDailyExchangeRateDto:ObservableObject
     {
+        public DateDto Date { get; }
         public ExchangeRateDto Dto { get; }
+        private string oldNote;
         private string note;
         public string Note
         {
             get => note;
-            set => SetProperty(ref note, value);
+            set
+            {
+                SetProperty(ref note, value);
+                OnPropertyChanged(nameof(NoteChanged));
+            }
         }
-
+        public bool NoteChanged=> note != oldNote;
         private bool isSaved;
         public bool IsSaved
         {
@@ -26,11 +32,18 @@ namespace OPM0PG_MAUI.Models
                 SetProperty(ref isSaved, value);
             }
         }
-        public ObservableDailyExchangeRateDto(ExchangeRateDto dto,bool isSaved,string note)
+        public ObservableDailyExchangeRateDto(DateDto date, ExchangeRateDto dto, bool isSaved, string note)
         {
+            Date = date;
             Dto = dto;
-            IsSaved=isSaved;
+            IsSaved = isSaved;
             this.note = note;
+            this.oldNote = note;
+        }
+        public void UpdateNote()
+        {
+            oldNote = note;
+            OnPropertyChanged(nameof(NoteChanged));
         }
     }
 }

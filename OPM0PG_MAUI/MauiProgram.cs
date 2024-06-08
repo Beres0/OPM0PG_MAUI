@@ -19,11 +19,13 @@ namespace OPM0PG_MAUI
             builder.Services.AddSingleton<LoginViewModel>();
             builder.Services.AddSingleton<RegistrationViewModel>();
             builder.Services.AddSingleton<ExchangeRatesViewModel>();
+            builder.Services.AddSingleton<SavedExchangeRateViewModel>();
 
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<RegistrationPage>();
             builder.Services.AddSingleton<CurrentExchangeRatesPage>();
             builder.Services.AddSingleton<SavedExchangeRatesPage>();
+            builder.Services.AddSingleton<Logout>();
 
             builder
                 .UseMauiApp<App>()

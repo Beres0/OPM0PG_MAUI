@@ -2,11 +2,50 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="OPM0PG_MAUI.SavedExchangeRatesPage"
-             Title="Saved Exchangerates">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Saved Exchangerates"
+                xmlns:vm="clr-namespace:OPM0PG_MAUI.ViewModels"
+             xmlns:models="clr-namespace:OPM0PG_MAUI.Models"
+             xmlns:dto="clr-namespace:WSH_HomeAssignment.Api.Contracts.ExchangeRates.Outputs;assembly=WSH_HomeAssignment.Api.Contracts"
+             x:DataType="vm:SavedExchangeRateViewModel">
+        <ScrollView>
+            <VerticalStackLayout>
+                <CollectionView  ItemsSource="{Binding SavedExchangeRates}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:ObservableDailyExchangeRateDto">
+                            <Frame Margin="10">
+                                <Grid ColumnSpacing="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1.5*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" FontSize="Medium" Grid.Column="0" Grid.ColumnSpan="2" VerticalTextAlignment="Center" Text="{Binding Date}"></Label>
+                                    <Button IsEnabled="{Binding NoteChanged}" Grid.Row="0"  Grid.Column="2" Text="Update" Clicked="UpdateButton_Clicked"></Button>
+                                    <Button IsEnabled="True" Grid.Row="0"  Grid.Column="3"  Text="Delete" Clicked="DeleteButton_Clicked"></Button>
+                                    <Label Grid.Row="1" FontSize="Medium" Grid.Column="0" VerticalTextAlignment="Center" Text="{Binding Dto.Currency}"></Label>
+                                    <Label Grid.Row="1" FontSize="Medium" Grid.Column="1" Grid.ColumnSpan="2" VerticalTextAlignment="Center" Text="{Binding Dto.Value}"></Label>
+                                    <Label Grid.Row="1" Grid.Column="4" VerticalTextAlignment="Center" Text="{Binding Dto.Unit,StringFormat='Unit: {0}'}"></Label>
+                                    <Editor Grid.Row="2" 
+                                        Grid.Column="0" 
+                                        Grid.ColumnSpan="4" 
+                                        MaxLength="100" 
+                                        VerticalTextAlignment="Center" 
+                                        AutoSize="TextChanges"
+                                        FontAttributes="Italic"
+                                        Text="{Binding Note}"></Editor>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <ActivityIndicator IsVisible="{Binding IsLoading}" IsRunning="{Binding IsLoading}"></ActivityIndicator>
+                <Button IsVisible="{Binding IsNotEndReached}" Command="{Binding LoadNextCommand}"  Margin="10" Text="Load More"></Button>
+            </VerticalStackLayout>
+        </ScrollView>
 </ContentPage>

@@ -9,14 +9,21 @@ namespace OPM0PG_MAUI.ViewModels
     {
         public event EventHandler<Exception> OnError;
         private readonly AuthenticationService authenticationService;
-        public ObservableRegistrationDto RegistrationDto { get; }
+        private ObservableRegistrationDto registrationDto;
+        public ObservableRegistrationDto RegistrationDto
+        {
+            get => registrationDto;
+            set => SetProperty(ref registrationDto, value);
+        }
+
+        public IAsyncRelayCommand RegisterCommand => new AsyncRelayCommand(RegisterAsync, () => RegistrationDto.IsValid);
+
         public RegistrationViewModel(AuthenticationService authenticationService)
         {
             this.authenticationService = authenticationService;
             RegistrationDto = new ObservableRegistrationDto();
         }
 
-        [RelayCommand]
         private async Task RegisterAsync()
         {
             try
@@ -27,6 +34,7 @@ namespace OPM0PG_MAUI.ViewModels
                     Password=RegistrationDto.Password,
                     Email=RegistrationDto.Email
                 });
+                Shell.Current.AsAppShell().AuthenticatedNavigationMode();
                 await Shell.Current.GoToAsync("//Current");
             }
             catch (Exception ex)

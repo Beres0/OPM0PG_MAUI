@@ -42,7 +42,14 @@ namespace OPM0PG_MAUI.ViewModels
                 OnPropertyChanged(nameof(ConversionOuput));
             }
         }
-
+        private bool isLoading;
+        public bool IsLoading
+        {
+            get=>isLoading; set
+            {
+                SetProperty(ref isLoading, value);
+            }
+        }
         private double conversionInput;
         public double ConversionInput
         {
@@ -107,6 +114,7 @@ namespace OPM0PG_MAUI.ViewModels
 
         public async Task LoadAsync()
         {
+            IsLoading = true;
             DailyExchangeRates.Clear();
             dailyDtos = await service.GetCurrentAsync();
             savedDailyDtos = await service.GetSavedCurrentAsync();
@@ -125,28 +133,29 @@ namespace OPM0PG_MAUI.ViewModels
                     note = savedDailyDtos.Notes[item.Key];
                     saved = true;
                 }
-                DailyExchangeRates.Add(new ObservableDailyExchangeRateDto(item.Value, saved, note));
+                DailyExchangeRates.Add(new ObservableDailyExchangeRateDto(dailyDtos.Date,item.Value, saved, note));
             }
             CurrencyKeys = currencies;
             ConversionInput = 0;
             SelectedTo = huf.Currency;
             SelectedFrom = huf.Currency;
+            IsLoading = false;
         }
-        public async Task SaveAsync(ObservableDailyExchangeRateDto dto)
+        public async Task SaveAsync(ObservableDailyExchangeRateDto item)
         {
-            if (!dto.IsSaved)
+            if (!item.IsSaved)
             {
-                await service.CreateSavedAsync(dailyDtos.Date, dto.Dto.Currency, new());
-                dto.IsSaved = true;
+                await service.CreateSavedAsync(dailyDtos.Date, item.Dto.Currency, new());
+                item.IsSaved = true;
             }
         }
-        public async Task DeleteAsync(ObservableDailyExchangeRateDto dto)
+        public async Task DeleteAsync(ObservableDailyExchangeRateDto item)
         {
-            if (dto.IsSaved)
+            if (item.IsSaved)
             {
-                await service.DeleteSavedAsync(dailyDtos.Date, dto.Dto.Currency);
-                dto.IsSaved = false;
-                dto.Note = null;
+                await service.DeleteSavedAsync(dailyDtos.Date, item.Dto.Currency);
+                item.IsSaved = false;
+                item.Note = null;
             }
         }
     }

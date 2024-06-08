@@ -31,8 +31,7 @@ namespace OPM0PG_MAUI
             Items.Clear();
             AddFlyoutItem<CurrentExchangeRatesPage>("Current");
             AddFlyoutItem<SavedExchangeRatesPage>("Saved");
-
-
+            AddFlyoutItem<Logout>("Logout");
         }
         public void UnAuthenticatedNavigationMode()
         {

@@ -22,13 +22,12 @@ namespace OPM0PG_MAUI.ViewModels
             get => loginDto;
             set => SetProperty(ref loginDto, value);
         }
+        public IAsyncRelayCommand LoginCommand => new AsyncRelayCommand(LoginAsync, () => loginDto.HasErrors);
         public LoginViewModel(AuthenticationService authenticationService)
         {
             this.authenticationService = authenticationService;
             LoginDto = new ObservableLoginDto();
         }
-
-        [RelayCommand]
         private async Task LoginAsync()
         {
             try
