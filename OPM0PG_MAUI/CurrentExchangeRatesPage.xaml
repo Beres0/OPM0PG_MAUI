@@ -28,7 +28,7 @@
                     <Label Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0"  FontSize="Medium" Text="Conversion"></Label>
                     <Picker Grid.Column="0" Grid.Row="1" ItemsSource="{Binding CurrencyKeys}" SelectedItem="{Binding SelectedFrom}"></Picker>
                     <Picker Grid.Column="1" Grid.Row="1" ItemsSource="{Binding CurrencyKeys}" SelectedItem="{Binding SelectedTo}"></Picker>
-                    <Entry Grid.Column="0" Grid.Row="2" Text="{Binding ConversionInput}"></Entry>
+                    <Entry Grid.Column="0" Grid.Row="2" Keyboard="Numeric" Text="{Binding ConversionInput}"></Entry>
                     <Label VerticalTextAlignment="End" Grid.Column="1" Grid.Row="2" Text="{Binding ConversionOuput, StringFormat='{0:N2}'}"></Label>
                 </Grid>
             </Frame>
